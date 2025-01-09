@@ -80,7 +80,7 @@ export function PokemonTable(props: PokemonTableProps) {
                       <TableHead
                         key={header.id}
                         colSpan={header.colSpan}
-                        style={{ width: header.getSize() }}
+                        style={{ minWidth: header.getSize() }}
                       >
                         {header.isPlaceholder
                           ? null

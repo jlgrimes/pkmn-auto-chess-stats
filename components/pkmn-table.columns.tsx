@@ -47,7 +47,7 @@ export const columns: ColumnDef<PokemonTableEntry>[] = [
   {
     accessorKey: 'types',
     header: 'Types',
-    size: 95,
+    size: 100,
     cell: ({ row }) => (
       <div className='flex'>
         {(row.getValue('types') as string[]).map(type => (
