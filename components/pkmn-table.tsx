@@ -11,14 +11,17 @@ import {
 import { PokemonTableEntry } from './pkmn-table.types';
 import {
   ColumnDef,
+  ColumnFiltersState,
   flexRender,
   getCoreRowModel,
+  getFilteredRowModel,
   getSortedRowModel,
   SortingState,
   useReactTable,
 } from '@tanstack/react-table';
 import { useRef, useState } from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
+import { Input } from './ui/input';
 
 interface PokemonTableProps {
   data: PokemonTableEntry[];
@@ -27,6 +30,7 @@ interface PokemonTableProps {
 
 export function PokemonTable(props: PokemonTableProps) {
   const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
   const table = useReactTable({
     data: props.data,
@@ -34,8 +38,11 @@ export function PokemonTable(props: PokemonTableProps) {
     getCoreRowModel: getCoreRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
+    onColumnFiltersChange: setColumnFilters,
+    getFilteredRowModel: getFilteredRowModel(),
     state: {
       sorting,
+      columnFilters,
     },
   });
 
@@ -51,70 +58,82 @@ export function PokemonTable(props: PokemonTableProps) {
   });
 
   return (
-    <div ref={parentRef} className='h-svh overflow-auto w-full'>
-      <div style={{ height: `${virtualizer.getTotalSize()}px` }}>
-        <Table>
-          <TableHeader>
-            {table.getHeaderGroups().map(headerGroup => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map(header => {
+    <div className='w-full'>
+      <div className='flex items-center py-4'>
+        <Input
+          placeholder='Search Pokemon'
+          value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
+          onChange={event =>
+            table.getColumn('name')?.setFilterValue(event.target.value)
+          }
+          className='max-w-sm'
+        />
+      </div>
+      <div ref={parentRef} className='h-svh overflow-auto'>
+        <div style={{ height: `${virtualizer.getTotalSize()}px` }}>
+          <Table>
+            <TableHeader>
+              {table.getHeaderGroups().map(headerGroup => (
+                <TableRow key={headerGroup.id}>
+                  {headerGroup.headers.map(header => {
+                    return (
+                      <TableHead
+                        key={header.id}
+                        colSpan={header.colSpan}
+                        style={{ width: header.getSize() }}
+                      >
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                      </TableHead>
+                    );
+                  })}
+                </TableRow>
+              ))}
+            </TableHeader>
+            <TableBody>
+              {rows?.length ? (
+                virtualizer.getVirtualItems().map((virtualRow, index) => {
+                  const row = rows[virtualRow.index];
                   return (
-                    <TableHead
-                      key={header.id}
-                      colSpan={header.colSpan}
-                      style={{ width: header.getSize() }}
+                    <TableRow
+                      key={row.id}
+                      style={{
+                        height: `${virtualRow.size}px`,
+                        transform: `translateY(${
+                          virtualRow.start - index * virtualRow.size
+                        }px)`,
+                      }}
                     >
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
+                      {row.getVisibleCells().map(cell => {
+                        return (
+                          <TableCell key={cell.id}>
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )}
+                          </TableCell>
+                        );
+                      })}
+                    </TableRow>
                   );
-                })}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {rows?.length ? (
-              virtualizer.getVirtualItems().map((virtualRow, index) => {
-                const row = rows[virtualRow.index];
-                return (
-                  <TableRow
-                    key={row.id}
-                    style={{
-                      height: `${virtualRow.size}px`,
-                      transform: `translateY(${
-                        virtualRow.start - index * virtualRow.size
-                      }px)`,
-                    }}
+                })
+              ) : (
+                <TableRow>
+                  <TableCell
+                    colSpan={props.columns.length}
+                    className='h-24 text-center'
                   >
-                    {row.getVisibleCells().map(cell => {
-                      return (
-                        <TableCell key={cell.id}>
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={props.columns.length}
-                  className='h-24 text-center'
-                >
-                  No results.
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
+                    No results.
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </div>
       </div>
     </div>
   );
