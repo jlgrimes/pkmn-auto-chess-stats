@@ -12,6 +12,7 @@ export const columns: ColumnDef<PokemonTableEntry>[] = [
   {
     accessorKey: 'index',
     header: 'Dex',
+    size: 40,
     cell: ({ row }) => (
       <Image
         src={`https://raw.githubusercontent.com/keldaanCommunity/SpriteCollab/master/portrait/${row.getValue(
@@ -30,6 +31,7 @@ export const columns: ColumnDef<PokemonTableEntry>[] = [
   {
     accessorKey: 'tier',
     header: 'Tier',
+    size: 50,
     cell: ({ row }) => (
       <div className='flex'>
         {[...Array.from(Array(row.getValue('tier')))].map((_, idx) => (
@@ -47,6 +49,7 @@ export const columns: ColumnDef<PokemonTableEntry>[] = [
   {
     accessorKey: 'types',
     header: 'Types',
+    size: 95,
     cell: ({ row }) => (
       <div className='flex'>
         {(row.getValue('types') as string[]).map(type => (
@@ -63,20 +66,24 @@ export const columns: ColumnDef<PokemonTableEntry>[] = [
   },
   {
     accessorKey: 'hp',
+    size: 20,
     header: ({ column }) => <SortHeaderButton column={column} header='HP' />,
   },
   {
     accessorKey: 'attack',
+    size: 20,
     header: ({ column }) => (
       <SortHeaderButton column={column} header='Attack' />
     ),
   },
   {
     accessorKey: 'defense',
+    size: 20,
     header: ({ column }) => <SortHeaderButton column={column} header='Def' />,
   },
   {
     accessorKey: 'specialDefense',
+    size: 20,
     header: ({ column }) => (
       <SortHeaderButton column={column} header='Sp. Def' />
     ),

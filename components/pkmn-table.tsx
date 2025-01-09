@@ -51,7 +51,7 @@ export function PokemonTable(props: PokemonTableProps) {
   });
 
   return (
-    <div ref={parentRef} className='h-[600px] overflow-auto w-full'>
+    <div ref={parentRef} className='h-svh overflow-auto w-full'>
       <div style={{ height: `${virtualizer.getTotalSize()}px` }}>
         <Table>
           <TableHeader>
@@ -59,7 +59,11 @@ export function PokemonTable(props: PokemonTableProps) {
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map(header => {
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead
+                      key={header.id}
+                      colSpan={header.colSpan}
+                      style={{ width: header.getSize() }}
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -96,22 +100,6 @@ export function PokemonTable(props: PokemonTableProps) {
                         </TableCell>
                       );
                     })}
-                  </TableRow>
-                );
-
-                return (
-                  <TableRow
-                    key={row.id}
-                    data-state={row.getIsSelected() && 'selected'}
-                  >
-                    {row.getVisibleCells().map(cell => (
-                      <TableCell key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
-                      </TableCell>
-                    ))}
                   </TableRow>
                 );
               })
