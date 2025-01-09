@@ -1,6 +1,6 @@
 import { PokemonTable } from '@/components/pkmn-table';
-import { PokemonTableEntry } from '@/components/pkmn-table.types';
 import { columns } from '@/components/pkmn-table.columns';
+import { PokemonTableEntry } from '@/components/pkmn-table.types';
 
 function fixName(csvName: string) {
   const nameParts = csvName.split('_');
@@ -15,6 +15,8 @@ export default async function Home() {
     'https://raw.githubusercontent.com/keldaanCommunity/pokemonAutoChess/refs/heads/master/app/models/precomputed/pokemons-data.csv'
   );
   const data = await res.text();
+
+  const synergies: string[] = [];
 
   const pokemon: PokemonTableEntry[] = data
     .split('\n')
@@ -47,13 +49,19 @@ export default async function Home() {
         numStages,
       ] = line.split(',');
 
+      const types = [type1, type2, type3, type4].filter(
+        type => type && type.length > 0
+      );
+
+      for (const type of types) {
+        if (!synergies.includes(type)) synergies.push(type);
+      }
+
       return {
         index: index.replace('-', '/'),
         name: fixName(name),
         tier: parseInt(tier),
-        types: [type1, type2, type3, type4].filter(
-          type => type && type.length > 0
-        ),
+        types,
         hp: parseInt(hp),
         attack: parseInt(attack),
         defense: parseInt(defense),
