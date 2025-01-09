@@ -9,6 +9,14 @@ import {
 } from '@/components/ui/table';
 import Image from 'next/image';
 
+function fixName(csvName: string) {
+  const nameParts = csvName.split('_');
+
+  return nameParts
+    .map(part => `${part[0]}${part.slice(1).toLowerCase()}`)
+    .join(' ');
+}
+
 export default async function Home() {
   const res = await fetch(
     'https://raw.githubusercontent.com/keldaanCommunity/pokemonAutoChess/refs/heads/master/app/models/precomputed/pokemons-data.csv'
@@ -17,7 +25,7 @@ export default async function Home() {
 
   const pokemon = data
     .split('\n')
-    .slice(1)
+    .slice(1, data.split('\n').length - 1)
     .map(line => {
       const [
         index,
@@ -48,7 +56,7 @@ export default async function Home() {
 
       return {
         index: index.replace('-', '/'),
-        name,
+        name: fixName(name),
         category,
         tier,
         additionalPick,
@@ -74,8 +82,6 @@ export default async function Home() {
       };
     });
 
-  console.log(pokemon);
-
   return (
     <div className='grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]'>
       <main className='flex flex-col gap-8 row-start-2 items-center sm:items-start'>
@@ -83,9 +89,9 @@ export default async function Home() {
           <TableCaption>A list of your recent invoices.</TableCaption>
           <TableHeader>
             <TableRow>
-              <TableHead className='w-[100px]'>Invoice</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Method</TableHead>
+              <TableHead className='w-[50px]'></TableHead>
+              <TableHead>Name</TableHead>
+              <TableHead>Type</TableHead>
               <TableHead className='text-right'>Amount</TableHead>
             </TableRow>
           </TableHeader>
@@ -100,8 +106,21 @@ export default async function Home() {
                     height={40}
                   />
                 </TableCell>
-                <TableCell>Paid</TableCell>
-                <TableCell>Credit Card</TableCell>
+                <TableCell>{pkmn.name}</TableCell>
+                <TableCell className='flex'>
+                  {[pkmn.type1, pkmn.type2, pkmn.type3, pkmn.type4].map(
+                    type =>
+                      type.length > 1 && (
+                        <Image
+                          key={`${pkmn.index}-type-${type}`}
+                          src={`https://raw.githubusercontent.com/keldaanCommunity/pokemonAutoChess/refs/heads/master/app/public/src/assets/types/${type}.svg`}
+                          alt={pkmn.name}
+                          width={32}
+                          height={32}
+                        />
+                      )
+                  )}
+                </TableCell>
                 <TableCell className='text-right'>$250.00</TableCell>
               </TableRow>
             ))}
