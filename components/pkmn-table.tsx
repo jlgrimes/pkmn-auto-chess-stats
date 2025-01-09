@@ -8,16 +8,16 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import Image from 'next/image';
 import { PokemonTableEntry } from './pkmn-table.types';
-import { useMemo } from 'react';
-import { SortHeaderButton } from './sort-header-button';
 import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
+  getSortedRowModel,
+  SortingState,
   useReactTable,
 } from '@tanstack/react-table';
+import { useState } from 'react';
 
 interface PokemonTableProps {
   data: PokemonTableEntry[];
@@ -25,10 +25,17 @@ interface PokemonTableProps {
 }
 
 export function PokemonTable(props: PokemonTableProps) {
+  const [sorting, setSorting] = useState<SortingState>([]);
+
   const table = useReactTable({
     data: props.data,
     columns: props.columns,
     getCoreRowModel: getCoreRowModel(),
+    onSortingChange: setSorting,
+    getSortedRowModel: getSortedRowModel(),
+    state: {
+      sorting,
+    },
   });
 
   return (

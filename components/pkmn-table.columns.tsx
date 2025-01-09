@@ -1,8 +1,12 @@
 'use client';
 
 import { ColumnDef } from '@tanstack/react-table';
+
+import { ArrowUpDown } from 'lucide-react';
 import { PokemonTableEntry } from './pkmn-table.types';
 import Image from 'next/image';
+import { Button } from './ui/button';
+import { SortHeaderButton } from './sort-header-button';
 
 export const columns: ColumnDef<PokemonTableEntry>[] = [
   {
@@ -59,18 +63,22 @@ export const columns: ColumnDef<PokemonTableEntry>[] = [
   },
   {
     accessorKey: 'hp',
-    header: 'HP',
+    header: ({ column }) => <SortHeaderButton column={column} header='HP' />,
   },
   {
     accessorKey: 'attack',
-    header: 'Attack',
+    header: ({ column }) => (
+      <SortHeaderButton column={column} header='Attack' />
+    ),
   },
   {
     accessorKey: 'defense',
-    header: 'Defense',
+    header: ({ column }) => <SortHeaderButton column={column} header='Def' />,
   },
   {
     accessorKey: 'specialDefense',
-    header: 'Sp. Def',
+    header: ({ column }) => (
+      <SortHeaderButton column={column} header='Sp. Def' />
+    ),
   },
 ];
