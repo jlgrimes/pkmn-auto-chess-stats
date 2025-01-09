@@ -28,7 +28,7 @@ export function SortHeaderButton(props: SortHeaderButtonProps) {
 
   return (
     <Button
-      variant='ghost'
+      variant={props.sort.by === props.type ? 'secondary' : 'ghost'}
       size='xs'
       onClick={() => {
         if (props.sort.by === props.type) {
