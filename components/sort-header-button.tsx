@@ -1,8 +1,6 @@
 import { ArrowDown, ArrowUp, ChevronsUpDown } from 'lucide-react';
-import { PkmnTableSort, Pokemon, PokemonTableEntry } from './pkmn-table.types';
+import { PokemonTableEntry } from './pkmn-table.types';
 import { Button } from './ui/button';
-import Image from 'next/image';
-import { useMemo } from 'react';
 import { Column } from '@tanstack/react-table';
 
 interface SortHeaderButtonProps {
@@ -10,18 +8,18 @@ interface SortHeaderButtonProps {
   header: string;
 }
 
-function getTypeImgUrl(type: keyof Pokemon) {
-  let slug;
+// function getTypeImgUrl(type: keyof Pokemon) {
+//   let slug;
 
-  if (type === 'hp') slug = 'HP';
-  if (type === 'attack') slug = 'ATK';
-  if (type === 'defense') slug = 'DEF';
-  if (type === 'specialDefense') slug = 'SPE_DEF';
+//   if (type === 'hp') slug = 'HP';
+//   if (type === 'attack') slug = 'ATK';
+//   if (type === 'defense') slug = 'DEF';
+//   if (type === 'specialDefense') slug = 'SPE_DEF';
 
-  if (!slug) return null;
+//   if (!slug) return null;
 
-  return `https://raw.githubusercontent.com/keldaanCommunity/pokemonAutoChess/refs/heads/master/app/public/src/assets/icons/${slug}.png`;
-}
+//   return `https://raw.githubusercontent.com/keldaanCommunity/pokemonAutoChess/refs/heads/master/app/public/src/assets/icons/${slug}.png`;
+// }
 
 export function SortHeaderButton(props: SortHeaderButtonProps) {
   // const typeImgUrl = useMemo(() => getTypeImgUrl(props.column.columnDef.cell?.toString()), [props.type]);

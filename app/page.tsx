@@ -10,6 +10,7 @@ function fixName(csvName: string) {
     .join(' ');
 }
 
+// @typescrip
 export default async function Home() {
   const res = await fetch(
     'https://raw.githubusercontent.com/keldaanCommunity/pokemonAutoChess/refs/heads/master/app/models/precomputed/pokemons-data.csv'
@@ -25,9 +26,9 @@ export default async function Home() {
       const [
         index,
         name,
-        category,
+        _category,
         tier,
-        additionalPick,
+        _additionalPick,
         type1,
         type2,
         type3,
@@ -36,17 +37,17 @@ export default async function Home() {
         attack,
         defense,
         specialDefense,
-        attackRange,
-        maxPP,
-        ability,
-        family,
-        familyType1,
-        familyType2,
-        familyType3,
-        familyType4,
-        duo,
-        regional,
-        numStages,
+        _attackRange,
+        _maxPP,
+        _ability,
+        _family,
+        _familyType1,
+        _familyType2,
+        _familyType3,
+        _familyType4,
+        _duo,
+        _regional,
+        _numStages,
       ] = line.split(',');
 
       const types = [type1, type2, type3, type4].filter(
