@@ -68,9 +68,9 @@ export function PokemonTable(props: PokemonTableProps) {
           <TableHead className='text-right'>
             <SortHeaderButton type='specialDefense' {...{ sort, setSort }} />
           </TableHead>
-          <TableHead className='text-right'>
+          {/* <TableHead className='text-right'>
             <SortHeaderButton type='bst' {...{ sort, setSort }} />
-          </TableHead>
+          </TableHead> */}
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -116,7 +116,7 @@ export function PokemonTable(props: PokemonTableProps) {
             <TableCell className='text-right'>{pkmn.attack}</TableCell>
             <TableCell className='text-right'>{pkmn.defense}</TableCell>
             <TableCell className='text-right'>{pkmn.specialDefense}</TableCell>
-            <TableCell className='text-right'>{pkmn.bst}</TableCell>
+            {/* <TableCell className='text-right'>{pkmn.bst}</TableCell> */}
           </TableRow>
         ))}
       </TableBody>
