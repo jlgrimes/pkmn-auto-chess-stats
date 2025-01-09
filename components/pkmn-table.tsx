@@ -21,7 +21,7 @@ interface PokemonTableProps {
 export function PokemonTable(props: PokemonTableProps) {
   const [sort, setSort] = useState<PkmnTableSort>({
     by: 'index',
-    order: 'desc',
+    order: 'asc',
   });
 
   const sortedPokemon = useMemo(() => {
@@ -48,9 +48,14 @@ export function PokemonTable(props: PokemonTableProps) {
       <TableCaption>A list of your recent invoices.</TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead className='w-[50px]'>Dex</TableHead>
+          <TableHead className='w-[50px]'>
+            <SortHeaderButton type='index' {...{ sort, setSort }} />
+          </TableHead>
           <TableHead>
             <SortHeaderButton type='name' {...{ sort, setSort }} />
+          </TableHead>
+          <TableHead>
+            <SortHeaderButton type='tier' {...{ sort, setSort }} />
           </TableHead>
           <TableHead>Type</TableHead>
           <TableHead className='text-right'>
@@ -64,6 +69,9 @@ export function PokemonTable(props: PokemonTableProps) {
           </TableHead>
           <TableHead className='text-right'>
             <SortHeaderButton type='specialDefense' {...{ sort, setSort }} />
+          </TableHead>
+          <TableHead className='text-right'>
+            <SortHeaderButton type='bst' {...{ sort, setSort }} />
           </TableHead>
         </TableRow>
       </TableHeader>
@@ -79,6 +87,19 @@ export function PokemonTable(props: PokemonTableProps) {
               />
             </TableCell>
             <TableCell>{pkmn.name}</TableCell>
+            <TableCell>
+              <div className='flex'>
+                {[...Array.from(Array(pkmn.tier))].map((_, idx) => (
+                  <Image
+                    key={`${pkmn.index}-star-${idx}`}
+                    src={`https://raw.githubusercontent.com/keldaanCommunity/pokemonAutoChess/c2b4974c4b1807c24c62020b0de7e5f9db532b1f/app/public/src/assets/ui/star.svg`}
+                    alt='star'
+                    width={16}
+                    height={16}
+                  />
+                ))}
+              </div>
+            </TableCell>
             <TableCell className='flex'>
               {[pkmn.type1, pkmn.type2, pkmn.type3, pkmn.type4].map(
                 type =>
@@ -97,6 +118,7 @@ export function PokemonTable(props: PokemonTableProps) {
             <TableCell className='text-right'>{pkmn.attack}</TableCell>
             <TableCell className='text-right'>{pkmn.defense}</TableCell>
             <TableCell className='text-right'>{pkmn.specialDefense}</TableCell>
+            <TableCell className='text-right'>{pkmn.bst}</TableCell>
           </TableRow>
         ))}
       </TableBody>

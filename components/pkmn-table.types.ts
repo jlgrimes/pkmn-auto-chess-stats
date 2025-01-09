@@ -2,12 +2,13 @@ export type Pokemon = {
   index: string;
   name: string;
   category: string;
-  tier: string;
+  tier: number;
   additionalPick: string;
   type1: string;
   type2: string;
   type3: string;
   type4: string;
+  bst: number;
   hp: number;
   attack: number;
   defense: number;
