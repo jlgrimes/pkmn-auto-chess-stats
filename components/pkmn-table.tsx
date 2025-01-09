@@ -9,72 +9,74 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import Image from 'next/image';
-import { PkmnTableSort, Pokemon } from './pkmn-table.types';
-import { useMemo, useState } from 'react';
+import { PokemonTableEntry } from './pkmn-table.types';
+import { useMemo } from 'react';
 import { SortHeaderButton } from './sort-header-button';
+import {
+  ColumnDef,
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+} from '@tanstack/react-table';
+import { PokemonTableContentCell } from './pkmn.table.cell-content';
 
 interface PokemonTableProps {
-  pokemon: Pokemon[];
+  data: PokemonTableEntry[];
+  columns: ColumnDef<PokemonTableEntry>[];
 }
 
 export function PokemonTable(props: PokemonTableProps) {
-  const [sort, setSort] = useState<PkmnTableSort>({
-    by: 'index',
-    order: 'asc',
+  const table = useReactTable({
+    data: props.data,
+    columns: props.columns,
+    getCoreRowModel: getCoreRowModel(),
   });
-
-  const sortedPokemon = useMemo(() => {
-    return props.pokemon.sort((a, b) => {
-      const isAscending = a[sort.by] < b[sort.by];
-      const isDescending = a[sort.by] > b[sort.by];
-
-      if (sort.order === 'asc') {
-        if (isAscending) return -1;
-        if (isDescending) return 1;
-      }
-
-      if (sort.order === 'desc') {
-        if (isAscending) return 1;
-        if (isDescending) return -1;
-      }
-
-      return 0;
-    });
-  }, [props.pokemon, sort]);
 
   return (
     <Table>
       <TableHeader>
-        <TableRow>
-          <TableHead className='w-[50px]'>
-            <SortHeaderButton type='index' {...{ sort, setSort }} />
-          </TableHead>
-          <TableHead>
-            <SortHeaderButton type='name' {...{ sort, setSort }} />
-          </TableHead>
-          <TableHead>
-            <SortHeaderButton type='tier' {...{ sort, setSort }} />
-          </TableHead>
-          <TableHead>Type</TableHead>
-          <TableHead className='text-right'>
-            <SortHeaderButton type='hp' {...{ sort, setSort }} />
-          </TableHead>
-          <TableHead className='text-right'>
-            <SortHeaderButton type='attack' {...{ sort, setSort }} />
-          </TableHead>
-          <TableHead className='text-right'>
-            <SortHeaderButton type='defense' {...{ sort, setSort }} />
-          </TableHead>
-          <TableHead className='text-right'>
-            <SortHeaderButton type='specialDefense' {...{ sort, setSort }} />
-          </TableHead>
-          {/* <TableHead className='text-right'>
-            <SortHeaderButton type='bst' {...{ sort, setSort }} />
-          </TableHead> */}
-        </TableRow>
+        {table.getHeaderGroups().map(headerGroup => (
+          <TableRow key={headerGroup.id}>
+            {headerGroup.headers.map(header => {
+              return (
+                <TableHead key={header.id}>
+                  {header.isPlaceholder
+                    ? null
+                    : flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
+                </TableHead>
+              );
+            })}
+          </TableRow>
+        ))}
       </TableHeader>
       <TableBody>
-        {sortedPokemon.map(pkmn => (
+        {table.getRowModel().rows?.length ? (
+          table.getRowModel().rows.map(row => (
+            <TableRow
+              key={row.id}
+              data-state={row.getIsSelected() && 'selected'}
+            >
+              {row.getVisibleCells().map(cell => (
+                <TableCell key={cell.id}>
+                  <PokemonTableContentCell cell={cell} />
+                </TableCell>
+              ))}
+            </TableRow>
+          ))
+        ) : (
+          <TableRow>
+            <TableCell
+              colSpan={props.columns.length}
+              className='h-24 text-center'
+            >
+              No results.
+            </TableCell>
+          </TableRow>
+        )}
+        {/* {sortedPokemon.map(pkmn => (
           <TableRow key={pkmn.index}>
             <TableCell>
               <Image
@@ -116,9 +118,8 @@ export function PokemonTable(props: PokemonTableProps) {
             <TableCell className='text-right'>{pkmn.attack}</TableCell>
             <TableCell className='text-right'>{pkmn.defense}</TableCell>
             <TableCell className='text-right'>{pkmn.specialDefense}</TableCell>
-            {/* <TableCell className='text-right'>{pkmn.bst}</TableCell> */}
           </TableRow>
-        ))}
+        ))} */}
       </TableBody>
     </Table>
   );

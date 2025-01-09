@@ -1,3 +1,14 @@
+export type PokemonTableEntry = {
+  index: string;
+  name: string;
+  tier: number;
+  types: string[];
+  hp: number;
+  attack: number;
+  defense: number;
+  specialDefense: number;
+};
+
 export type Pokemon = {
   index: string;
   name: string;

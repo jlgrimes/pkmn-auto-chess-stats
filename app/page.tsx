@@ -1,4 +1,6 @@
 import { PokemonTable } from '@/components/pkmn-table';
+import { PokemonTableEntry } from '@/components/pkmn-table.types';
+import { columns } from '@/components/pkmn-table.columns';
 
 function fixName(csvName: string) {
   const nameParts = csvName.split('_');
@@ -14,7 +16,7 @@ export default async function Home() {
   );
   const data = await res.text();
 
-  const pokemon = data
+  const pokemon: PokemonTableEntry[] = data
     .split('\n')
     .slice(1, data.split('\n').length - 1)
     .map(line => {
@@ -48,29 +50,14 @@ export default async function Home() {
       return {
         index: index.replace('-', '/'),
         name: fixName(name),
-        category,
         tier: parseInt(tier),
-        additionalPick,
-        type1,
-        type2,
-        type3,
-        type4,
-        bst: parseInt(attack) + parseInt(defense) + parseInt(specialDefense),
+        types: [type1, type2, type3, type4].filter(
+          type => type && type.length > 0
+        ),
         hp: parseInt(hp),
         attack: parseInt(attack),
         defense: parseInt(defense),
         specialDefense: parseInt(specialDefense),
-        attackRange: parseInt(attackRange),
-        maxPP: parseInt(maxPP),
-        ability,
-        family,
-        familyType1,
-        familyType2,
-        familyType3,
-        familyType4,
-        duo,
-        regional,
-        numStages,
       };
     });
 
@@ -94,7 +81,7 @@ export default async function Home() {
             . Fan made.
           </div>
         </div>
-        <PokemonTable pokemon={pokemon} />
+        <PokemonTable data={pokemon} columns={columns} />
       </main>
     </div>
   );
