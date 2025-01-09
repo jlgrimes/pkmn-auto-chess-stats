@@ -2,16 +2,14 @@
 
 import { ColumnDef } from '@tanstack/react-table';
 
-import { ArrowUpDown } from 'lucide-react';
 import { PokemonTableEntry } from './pkmn-table.types';
 import Image from 'next/image';
-import { Button } from './ui/button';
 import { SortHeaderButton } from './sort-header-button';
 
 export const columns: ColumnDef<PokemonTableEntry>[] = [
   {
     accessorKey: 'index',
-    header: 'Dex',
+    header: ({ column }) => <SortHeaderButton column={column} header='Dex' />,
     size: 40,
     cell: ({ row }) => (
       <Image
@@ -26,11 +24,11 @@ export const columns: ColumnDef<PokemonTableEntry>[] = [
   },
   {
     accessorKey: 'name',
-    header: 'Name',
+    header: ({ column }) => <SortHeaderButton column={column} header='Name' />,
   },
   {
     accessorKey: 'tier',
-    header: 'Tier',
+    header: ({ column }) => <SortHeaderButton column={column} header='Tier' />,
     size: 50,
     cell: ({ row }) => (
       <div className='flex'>
