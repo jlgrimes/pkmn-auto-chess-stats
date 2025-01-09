@@ -1,3 +1,5 @@
+'use client';
+
 import {
   Table,
   TableBody,
@@ -8,29 +10,65 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import Image from 'next/image';
-import { Pokemon } from './pkmn-table.types';
+import { PkmnTableSort, Pokemon } from './pkmn-table.types';
+import { useMemo, useState } from 'react';
+import { SortHeaderButton } from './sort-header-button';
 
 interface PokemonTableProps {
   pokemon: Pokemon[];
 }
 
 export function PokemonTable(props: PokemonTableProps) {
+  const [sort, setSort] = useState<PkmnTableSort>({
+    by: 'index',
+    order: 'desc',
+  });
+
+  const sortedPokemon = useMemo(() => {
+    return props.pokemon.sort((a, b) => {
+      const isAscending = a[sort.by] < b[sort.by];
+      const isDescending = a[sort.by] > b[sort.by];
+
+      if (sort.order === 'asc') {
+        if (isAscending) return -1;
+        if (isDescending) return 1;
+      }
+
+      if (sort.order === 'desc') {
+        if (isAscending) return 1;
+        if (isDescending) return -1;
+      }
+
+      return 0;
+    });
+  }, [props.pokemon, sort]);
+
   return (
     <Table>
       <TableCaption>A list of your recent invoices.</TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead className='w-[50px]'></TableHead>
-          <TableHead>Name</TableHead>
+          <TableHead className='w-[50px]'>Dex</TableHead>
+          <TableHead>
+            <SortHeaderButton type='name' {...{ sort, setSort }} />
+          </TableHead>
           <TableHead>Type</TableHead>
-          <TableHead className='text-right'>HP</TableHead>
-          <TableHead className='text-right'>Attack</TableHead>
-          <TableHead className='text-right'>Defense</TableHead>
-          <TableHead className='text-right'>Sp Def</TableHead>
+          <TableHead className='text-right'>
+            <SortHeaderButton type='hp' {...{ sort, setSort }} />
+          </TableHead>
+          <TableHead className='text-right'>
+            <SortHeaderButton type='attack' {...{ sort, setSort }} />
+          </TableHead>
+          <TableHead className='text-right'>
+            <SortHeaderButton type='defense' {...{ sort, setSort }} />
+          </TableHead>
+          <TableHead className='text-right'>
+            <SortHeaderButton type='specialDefense' {...{ sort, setSort }} />
+          </TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        {props.pokemon.map(pkmn => (
+        {sortedPokemon.map(pkmn => (
           <TableRow key={pkmn.index}>
             <TableCell>
               <Image

@@ -8,12 +8,12 @@ export type Pokemon = {
   type2: string;
   type3: string;
   type4: string;
-  hp: string;
-  attack: string;
-  defense: string;
-  specialDefense: string;
-  attackRange: string;
-  maxPP: string;
+  hp: number;
+  attack: number;
+  defense: number;
+  specialDefense: number;
+  attackRange: number;
+  maxPP: number;
   ability: string;
   family: string;
   familyType1: string;
@@ -23,4 +23,9 @@ export type Pokemon = {
   duo: string;
   regional: string;
   numStages: string;
+};
+
+export type PkmnTableSort = {
+  by: keyof Pokemon;
+  order: 'asc' | 'desc';
 };
