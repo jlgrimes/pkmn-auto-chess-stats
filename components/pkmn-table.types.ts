@@ -1,0 +1,26 @@
+export type Pokemon = {
+  index: string;
+  name: string;
+  category: string;
+  tier: string;
+  additionalPick: string;
+  type1: string;
+  type2: string;
+  type3: string;
+  type4: string;
+  hp: string;
+  attack: string;
+  defense: string;
+  specialDefense: string;
+  attackRange: string;
+  maxPP: string;
+  ability: string;
+  family: string;
+  familyType1: string;
+  familyType2: string;
+  familyType3: string;
+  familyType4: string;
+  duo: string;
+  regional: string;
+  numStages: string;
+};
