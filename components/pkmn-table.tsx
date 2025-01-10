@@ -33,6 +33,7 @@ import {
   DropdownMenuCheckboxItem,
 } from '@/components/ui/dropdown-menu';
 import { Button } from './ui/button';
+import { capitalizeString } from '@/lib/utils';
 
 interface PokemonTableProps {
   data: PokemonTableEntry[];
@@ -81,9 +82,7 @@ export function PokemonTable(props: PokemonTableProps) {
           className='max-w-sm'
         />
         <DropdownMenu>
-          <DropdownMenuTrigger>
-            <Button>Filter</Button>
-          </DropdownMenuTrigger>
+          <DropdownMenuTrigger>Filter</DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuLabel>Synergies</DropdownMenuLabel>
             <DropdownMenuSeparator />
@@ -100,7 +99,6 @@ export function PokemonTable(props: PokemonTableProps) {
                     (table.getColumn('types')?.getFilterValue() as
                       | string[]
                       | undefined) ?? [];
-                  console.log(filterValue);
 
                   if (checked)
                     return table
@@ -116,7 +114,7 @@ export function PokemonTable(props: PokemonTableProps) {
                       );
                 }}
               >
-                {synergy}
+                {capitalizeString(synergy)}
               </DropdownMenuCheckboxItem>
             ))}
           </DropdownMenuContent>

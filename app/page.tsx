@@ -1,14 +1,7 @@
 import { PokemonTable } from '@/components/pkmn-table';
 import { columns } from '@/components/pkmn-table.columns';
 import { PokemonTableEntry } from '@/components/pkmn-table.types';
-
-function fixName(csvName: string) {
-  const nameParts = csvName.split('_');
-
-  return nameParts
-    .map(part => `${part[0]}${part.slice(1).toLowerCase()}`)
-    .join(' ');
-}
+import { capitalizeString } from '@/lib/utils';
 
 // @typescrip
 export default async function Home() {
@@ -60,7 +53,7 @@ export default async function Home() {
 
       return {
         index: index.replace('-', '/'),
-        name: fixName(name),
+        name: capitalizeString(name),
         tier: parseInt(tier),
         types,
         hp: parseInt(hp),
