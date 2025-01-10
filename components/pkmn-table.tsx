@@ -22,10 +22,22 @@ import {
 import { useRef, useState } from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { Input } from './ui/input';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuRadioItem,
+  DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+  DropdownMenuCheckboxItem,
+} from '@/components/ui/dropdown-menu';
+import { Button } from './ui/button';
 
 interface PokemonTableProps {
   data: PokemonTableEntry[];
   columns: ColumnDef<PokemonTableEntry>[];
+  synergies: string[];
 }
 
 export function PokemonTable(props: PokemonTableProps) {
@@ -59,7 +71,7 @@ export function PokemonTable(props: PokemonTableProps) {
 
   return (
     <div className='w-full'>
-      <div className='flex items-center py-4'>
+      <div className='flex items-center py-4 space-x-4'>
         <Input
           placeholder='Search Pokemon'
           value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
@@ -68,6 +80,47 @@ export function PokemonTable(props: PokemonTableProps) {
           }
           className='max-w-sm'
         />
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <Button>Filter</Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuLabel>Synergies</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            {props.synergies.map(synergy => (
+              <DropdownMenuCheckboxItem
+                key={synergy + '-filter'}
+                checked={(
+                  table.getColumn('types')?.getFilterValue() as
+                    | string[]
+                    | undefined
+                )?.includes(synergy)}
+                onCheckedChange={(checked: boolean) => {
+                  const filterValue =
+                    (table.getColumn('types')?.getFilterValue() as
+                      | string[]
+                      | undefined) ?? [];
+                  console.log(filterValue);
+
+                  if (checked)
+                    return table
+                      .getColumn('types')
+                      ?.setFilterValue([...filterValue, synergy]);
+                  else
+                    return table
+                      .getColumn('types')
+                      ?.setFilterValue(
+                        filterValue.filter(
+                          selectedFilter => selectedFilter !== synergy
+                        )
+                      );
+                }}
+              >
+                {synergy}
+              </DropdownMenuCheckboxItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
       <div ref={parentRef} className='h-svh overflow-auto'>
         <div style={{ height: `${virtualizer.getTotalSize()}px` }}>

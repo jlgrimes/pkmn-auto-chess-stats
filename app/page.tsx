@@ -90,7 +90,7 @@ export default async function Home() {
             . Fan made.
           </div>
         </div>
-        <PokemonTable data={pokemon} columns={columns} />
+        <PokemonTable data={pokemon} columns={columns} synergies={synergies} />
       </main>
     </div>
   );

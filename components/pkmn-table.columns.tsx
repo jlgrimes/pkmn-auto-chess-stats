@@ -61,6 +61,7 @@ export const columns: ColumnDef<PokemonTableEntry>[] = [
         ))}
       </div>
     ),
+    filterFn: 'arrIncludesAll',
   },
   {
     accessorKey: 'hp',
