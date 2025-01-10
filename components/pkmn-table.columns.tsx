@@ -5,6 +5,7 @@ import { ColumnDef } from '@tanstack/react-table';
 import { PokemonTableEntry } from './pkmn-table.types';
 import Image from 'next/image';
 import { SortHeaderButton } from './sort-header-button';
+import { PokemonSynergy } from './pkmn-synergy';
 
 export const columns: ColumnDef<PokemonTableEntry>[] = [
   {
@@ -51,12 +52,9 @@ export const columns: ColumnDef<PokemonTableEntry>[] = [
     cell: ({ row }) => (
       <div className='flex'>
         {(row.getValue('types') as string[]).map(type => (
-          <Image
+          <PokemonSynergy
             key={`${row.getValue('index')}-type-${type}`}
-            src={`https://raw.githubusercontent.com/keldaanCommunity/pokemonAutoChess/refs/heads/master/app/public/src/assets/types/${type}.svg`}
-            alt={type}
-            width={32}
-            height={32}
+            type={type}
           />
         ))}
       </div>

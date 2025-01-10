@@ -34,6 +34,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Button } from './ui/button';
 import { capitalizeString } from '@/lib/utils';
+import { PokemonSynergy } from './pkmn-synergy';
 
 interface PokemonTableProps {
   data: PokemonTableEntry[];
@@ -114,7 +115,10 @@ export function PokemonTable(props: PokemonTableProps) {
                       );
                 }}
               >
-                {capitalizeString(synergy)}
+                <div className='flex gap-x-2 items-center'>
+                  <PokemonSynergy type={synergy} />
+                  {capitalizeString(synergy)}
+                </div>
               </DropdownMenuCheckboxItem>
             ))}
           </DropdownMenuContent>
