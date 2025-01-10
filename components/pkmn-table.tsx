@@ -25,14 +25,11 @@ import { Input } from './ui/input';
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuRadioItem,
   DropdownMenuLabel,
-  DropdownMenuRadioGroup,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
   DropdownMenuCheckboxItem,
 } from '@/components/ui/dropdown-menu';
-import { Button } from './ui/button';
 import { capitalizeString } from '@/lib/utils';
 import { PokemonSynergy } from './pkmn-synergy';
 
@@ -85,7 +82,7 @@ export function PokemonTable(props: PokemonTableProps) {
         <DropdownMenu>
           <DropdownMenuTrigger>Filter</DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuLabel>Synergies</DropdownMenuLabel>
+            <DropdownMenuLabel>Types</DropdownMenuLabel>
             <DropdownMenuSeparator />
             {props.synergies.map(synergy => (
               <DropdownMenuCheckboxItem

@@ -26,13 +26,16 @@ export const columns: ColumnDef<PokemonTableEntry>[] = [
   {
     accessorKey: 'name',
     header: ({ column }) => <SortHeaderButton column={column} header='Name' />,
+    cell: ({ row }) => (
+      <div className='min-w-[200px]'>{row.getValue('name')}</div>
+    ),
   },
   {
     accessorKey: 'tier',
     header: ({ column }) => <SortHeaderButton column={column} header='Tier' />,
     size: 50,
     cell: ({ row }) => (
-      <div className='flex'>
+      <div className='flex w-[64px]'>
         {[...Array.from(Array(row.getValue('tier')))].map((_, idx) => (
           <Image
             key={`${row.getValue('index')}-star-${idx}`}
@@ -50,7 +53,7 @@ export const columns: ColumnDef<PokemonTableEntry>[] = [
     header: 'Types',
     size: 100,
     cell: ({ row }) => (
-      <div className='flex'>
+      <div className='flex w-[128px]'>
         {(row.getValue('types') as string[]).map(type => (
           <PokemonSynergy
             key={`${row.getValue('index')}-type-${type}`}
