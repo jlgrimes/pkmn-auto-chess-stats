@@ -19,7 +19,7 @@ import {
   SortingState,
   useReactTable,
 } from '@tanstack/react-table';
-import { useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { Input } from './ui/input';
 import {
@@ -68,6 +68,12 @@ export function PokemonTable(props: PokemonTableProps) {
     overscan: 20,
   });
 
+  const getSynergyIsChecked = useCallback((synergy: string) => {
+    return (
+      table.getColumn('types')?.getFilterValue() as string[] | undefined
+    )?.includes(synergy);
+  }, []);
+
   return (
     <div className='w-full'>
       <div className='flex items-center py-4 space-x-4'>
@@ -84,40 +90,52 @@ export function PokemonTable(props: PokemonTableProps) {
           <DropdownMenuContent>
             <DropdownMenuLabel>Types</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            {props.synergies.map(synergy => (
-              <DropdownMenuCheckboxItem
-                key={synergy + '-filter'}
-                checked={(
-                  table.getColumn('types')?.getFilterValue() as
-                    | string[]
-                    | undefined
-                )?.includes(synergy)}
-                onCheckedChange={(checked: boolean) => {
-                  const filterValue =
-                    (table.getColumn('types')?.getFilterValue() as
-                      | string[]
-                      | undefined) ?? [];
+            <div className='h-[200px] overflow-scroll'>
+              {props.synergies
+                .sort((a, b) => {
+                  if (getSynergyIsChecked(a)) return -1;
+                  if (getSynergyIsChecked(b)) return 1;
 
-                  if (checked)
-                    return table
-                      .getColumn('types')
-                      ?.setFilterValue([...filterValue, synergy]);
-                  else
-                    return table
-                      .getColumn('types')
-                      ?.setFilterValue(
-                        filterValue.filter(
-                          selectedFilter => selectedFilter !== synergy
-                        )
-                      );
-                }}
-              >
-                <div className='flex gap-x-2 items-center'>
-                  <PokemonSynergy type={synergy} />
-                  {capitalizeString(synergy)}
-                </div>
-              </DropdownMenuCheckboxItem>
-            ))}
+                  if (a < b) return -1;
+                  if (a > b) return 1;
+
+                  return 0;
+                })
+                .map(synergy => (
+                  <DropdownMenuCheckboxItem
+                    key={synergy + '-filter'}
+                    checked={(
+                      table.getColumn('types')?.getFilterValue() as
+                        | string[]
+                        | undefined
+                    )?.includes(synergy)}
+                    onCheckedChange={(checked: boolean) => {
+                      const filterValue =
+                        (table.getColumn('types')?.getFilterValue() as
+                          | string[]
+                          | undefined) ?? [];
+
+                      if (checked)
+                        return table
+                          .getColumn('types')
+                          ?.setFilterValue([...filterValue, synergy]);
+                      else
+                        return table
+                          .getColumn('types')
+                          ?.setFilterValue(
+                            filterValue.filter(
+                              selectedFilter => selectedFilter !== synergy
+                            )
+                          );
+                    }}
+                  >
+                    <div className='flex gap-x-2 items-center'>
+                      <PokemonSynergy type={synergy} />
+                      {capitalizeString(synergy)}
+                    </div>
+                  </DropdownMenuCheckboxItem>
+                ))}
+            </div>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
