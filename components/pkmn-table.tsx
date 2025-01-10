@@ -32,6 +32,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { capitalizeString } from '@/lib/utils';
 import { PokemonSynergy } from './pkmn-synergy';
+import { Settings2 } from 'lucide-react';
 
 interface PokemonTableProps {
   data: PokemonTableEntry[];
@@ -86,7 +87,10 @@ export function PokemonTable(props: PokemonTableProps) {
           className='max-w-sm'
         />
         <DropdownMenu>
-          <DropdownMenuTrigger>Filter</DropdownMenuTrigger>
+          <DropdownMenuTrigger className='flex gap-x-2 items-center '>
+            <Settings2 className='w-4 h-4' />
+            Filter
+          </DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuLabel>Types</DropdownMenuLabel>
             <DropdownMenuSeparator />
