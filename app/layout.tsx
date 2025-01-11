@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Roboto_Mono } from 'next/font/google';
+import { Analytics } from '@vercel/analytics/react';
 
 const robotoMono = Roboto_Mono({ subsets: ['latin'] });
 import './globals.css';
@@ -16,7 +17,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={robotoMono.className}>{children}</body>
+      <body className={robotoMono.className}>
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
