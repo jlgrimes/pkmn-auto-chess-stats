@@ -40,7 +40,7 @@ export default async function Home() {
         _familyType4,
         _duo,
         _regional,
-        _numStages,
+        numStages,
       ] = line.split(',');
 
       const types = [type1, type2, type3, type4].filter(
@@ -60,6 +60,8 @@ export default async function Home() {
         attack: parseInt(attack),
         defense: parseInt(defense),
         specialDefense: parseInt(specialDefense),
+        // Think the max tier is always equal to the highest star value?
+        maxTier: parseInt(numStages),
       };
     });
 

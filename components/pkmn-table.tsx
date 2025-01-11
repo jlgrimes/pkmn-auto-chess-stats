@@ -55,6 +55,9 @@ export function PokemonTable(props: PokemonTableProps) {
     state: {
       sorting,
       columnFilters,
+      columnVisibility: {
+        maxTier: false,
+      },
     },
   });
 

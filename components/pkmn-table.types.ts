@@ -7,6 +7,7 @@ export type PokemonTableEntry = {
   attack: number;
   defense: number;
   specialDefense: number;
+  maxTier: number;
 };
 
 export type Pokemon = {

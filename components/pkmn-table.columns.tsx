@@ -34,20 +34,26 @@ export const columns: ColumnDef<PokemonTableEntry>[] = [
     accessorKey: 'tier',
     header: ({ column }) => <SortHeaderButton column={column} header='Tier' />,
     size: 50,
-    cell: ({ row }) => (
-      <div className='flex w-[64px]'>
-        {[...Array.from(Array(row.getValue('tier')))].map((_, idx) => (
-          <Image
-            key={`${row.getValue('index')}-star-${idx}`}
-            src={`https://raw.githubusercontent.com/keldaanCommunity/pokemonAutoChess/c2b4974c4b1807c24c62020b0de7e5f9db532b1f/app/public/src/assets/ui/star.svg`}
-            alt='star'
-            width={16}
-            height={16}
-          />
-        ))}
-      </div>
-    ),
+    cell: ({ row }) => {
+      const tier = row.getValue('tier') as number;
+      return (
+        <div className='flex w-[64px]'>
+          {[...Array.from(Array(row.getValue('maxTier')))].map((_, idx) => (
+            <Image
+              key={`${row.getValue('index')}-star-${idx}`}
+              src={`https://raw.githubusercontent.com/keldaanCommunity/pokemonAutoChess/c2b4974c4b1807c24c62020b0de7e5f9db532b1f/app/public/src/assets/ui/star${
+                idx >= tier ? '_empty' : ''
+              }.svg`}
+              alt='star'
+              width={16}
+              height={16}
+            />
+          ))}
+        </div>
+      );
+    },
   },
+  { accessorKey: 'maxTier' },
   {
     accessorKey: 'types',
     header: 'Types',
