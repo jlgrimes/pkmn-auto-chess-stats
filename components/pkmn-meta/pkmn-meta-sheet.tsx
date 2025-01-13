@@ -2,7 +2,14 @@
 
 import Image from 'next/image';
 import { usePokemonMeta } from './pkmn-meta.hooks';
-import { Table, TableBody, TableCell, TableRow } from '../ui/table';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '../ui/table';
 
 interface PokemonMetaSheetProps {
   pokemon: string;
@@ -15,8 +22,16 @@ export const PokemonMetaSheet = (props: PokemonMetaSheetProps) => {
 
   return (
     <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead>Tier</TableHead>
+          <TableHead># Used</TableHead>
+          <TableHead>Avg. Rank</TableHead>
+          <TableHead>Most Common Items</TableHead>
+        </TableRow>
+      </TableHeader>
       <TableBody>
-        {data?.map(tier => (
+        {data?.reverse()?.map(tier => (
           <TableRow>
             <TableCell>
               <Image
@@ -26,6 +41,8 @@ export const PokemonMetaSheet = (props: PokemonMetaSheetProps) => {
                 alt={tier.tier}
               />
             </TableCell>
+            <TableCell>{tier.pokemon?.count}</TableCell>
+            <TableCell>{tier.pokemon?.rank}</TableCell>
             <TableCell>
               <div className='flex space-x-1'>
                 {tier.pokemon?.items.map(item => (
