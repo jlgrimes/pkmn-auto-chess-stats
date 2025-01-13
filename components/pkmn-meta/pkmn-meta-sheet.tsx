@@ -32,7 +32,7 @@ export const PokemonMetaSheet = (props: PokemonMetaSheetProps) => {
       </TableHeader>
       <TableBody>
         {data?.reverse()?.map(tier => (
-          <TableRow>
+          <TableRow key={`${props.pokemon}-tier-row-${tier}`}>
             <TableCell>
               <Image
                 height={30}
@@ -47,6 +47,7 @@ export const PokemonMetaSheet = (props: PokemonMetaSheetProps) => {
               <div className='flex space-x-1'>
                 {tier.pokemon?.items.map(item => (
                   <Image
+                    key={tier.tier + item}
                     height={30}
                     width={30}
                     src={`https://raw.githubusercontent.com/keldaanCommunity/pokemonAutoChess/ab58939ad259ea8434557a6766576760a8d4ca5a/app/public/src/assets/item%7Btps%7D/${item}.png`}
