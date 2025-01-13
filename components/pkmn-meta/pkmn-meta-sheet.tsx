@@ -20,6 +20,8 @@ export const PokemonMetaSheet = (props: PokemonMetaSheetProps) => {
 
   if (isLoading) return <div>loading</div>;
 
+  if (props.pokemon.length === 0) return null;
+
   return (
     <Table>
       <TableHeader>
