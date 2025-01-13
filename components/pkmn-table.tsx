@@ -33,6 +33,7 @@ import {
 import { capitalizeString } from '@/lib/utils';
 import { PokemonSynergy } from './pkmn-synergy';
 import { Settings2 } from 'lucide-react';
+import { PokemonMetaDialog } from './pkmn-meta/pkmn-meta-dialog';
 
 interface PokemonTableProps {
   data: PokemonTableEntry[];
@@ -43,6 +44,7 @@ interface PokemonTableProps {
 export function PokemonTable(props: PokemonTableProps) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [viewedPokemon, setViewedPokemon] = useState<string | undefined>();
 
   const table = useReactTable({
     data: props.data,
@@ -88,6 +90,10 @@ export function PokemonTable(props: PokemonTableProps) {
             table.getColumn('name')?.setFilterValue(event.target.value)
           }
           className='max-w-sm'
+        />
+        <PokemonMetaDialog
+          pokemon={viewedPokemon}
+          setPokemon={setViewedPokemon}
         />
         <DropdownMenu>
           <DropdownMenuTrigger className='flex gap-x-2 items-center '>
@@ -184,6 +190,7 @@ export function PokemonTable(props: PokemonTableProps) {
                           virtualRow.start - index * virtualRow.size
                         }px)`,
                       }}
+                      onClick={() => setViewedPokemon(row.getValue('name'))}
                     >
                       {row.getVisibleCells().map(cell => {
                         return (
