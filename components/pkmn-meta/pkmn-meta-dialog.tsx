@@ -25,11 +25,11 @@ export const PokemonMetaDialog = (props: PokemonMetaDialogProps) => {
     >
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Are you absolutely sure?</DialogTitle>
-          <DialogDescription>
+          <DialogTitle>{props.pokemon} Usage</DialogTitle>
+          {/* <DialogDescription>
             This action cannot be undone. This will permanently delete your
             account and remove your data from our servers.
-          </DialogDescription>
+          </DialogDescription> */}
         </DialogHeader>
         <PokemonMetaSheet pokemon={props.pokemon ?? ''} />
       </DialogContent>

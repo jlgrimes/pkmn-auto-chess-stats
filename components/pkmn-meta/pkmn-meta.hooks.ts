@@ -29,7 +29,7 @@ export const usePokemonMeta = (pokemonName: string) => {
       tier: tierObj.tier,
       pokemon: Object.entries(tierObj.pokemons).find(
         ([name]) => name === pokemonName.toUpperCase()
-      ),
+      )?.[1],
     })),
     isLoading,
   };
