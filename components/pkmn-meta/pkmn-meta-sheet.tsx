@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { usePokemonMeta } from './pkmn-meta.hooks';
+import { usePokemonMeta } from '../../lib/hooks/pkmn-meta.hooks';
 import {
   Table,
   TableBody,

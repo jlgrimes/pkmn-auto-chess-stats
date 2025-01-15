@@ -5,7 +5,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { PokemonMetaSheet } from './pkmn-meta-sheet';
-import { usePokemonMeta } from './pkmn-meta.hooks';
+import { usePokemonMeta } from '../../lib/hooks/pkmn-meta.hooks';
 
 interface PokemonMetaDialogProps {
   pokemon: string | undefined;
