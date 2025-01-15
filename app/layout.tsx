@@ -30,34 +30,31 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body
-        className={cn(
-          'items-center justify-items-center min-h-screen p-8 pb-20 gap-16 space-y-2',
-          robotoMono.className
-        )}
-      >
-        <NavigationMenu>
-          <NavigationMenuList>
-            <NavigationMenuItem>
-              <Link href='/' legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Home
-                </NavigationMenuLink>
-              </Link>
-              <Link href='/pokemon' legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Pokemon
-                </NavigationMenuLink>
-              </Link>
-              <Link href='/weather' legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Weather
-                </NavigationMenuLink>
-              </Link>
-            </NavigationMenuItem>
-          </NavigationMenuList>
-        </NavigationMenu>
-        {children}
+      <body className={robotoMono.className}>
+        <div className='items-center justify-items-center min-h-screen p-8 pb-20 gap-16 space-y-2'>
+          <NavigationMenu>
+            <NavigationMenuList>
+              <NavigationMenuItem>
+                <Link href='/' legacyBehavior passHref>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    Home
+                  </NavigationMenuLink>
+                </Link>
+                <Link href='/pokemon' legacyBehavior passHref>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    Pokemon
+                  </NavigationMenuLink>
+                </Link>
+                <Link href='/weather' legacyBehavior passHref>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    Weather
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
+          {children}
+        </div>
         <Analytics />
       </body>
     </html>
