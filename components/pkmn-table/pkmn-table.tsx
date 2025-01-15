@@ -16,6 +16,7 @@ import {
   getCoreRowModel,
   getFilteredRowModel,
   getSortedRowModel,
+  Row,
   SortingState,
   useReactTable,
 } from '@tanstack/react-table';
@@ -33,7 +34,7 @@ import {
 import { capitalizeString } from '@/lib/utils';
 import { PokemonSynergy } from '../pkmn-synergy';
 import { Settings2 } from 'lucide-react';
-import { PokemonMetaDialog } from '../pkmn-meta/pkmn-meta-dialog';
+import { PokemonInfoDialog } from '../pkmn-info/pkmn-info-dialog';
 
 interface PokemonTableProps {
   data: PokemonTableEntry[];
@@ -44,7 +45,7 @@ interface PokemonTableProps {
 export function PokemonTable(props: PokemonTableProps) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const [viewedPokemon, setViewedPokemon] = useState<string | undefined>();
+  const [viewedPokemon, setViewedPokemon] = useState<Row<PokemonTableEntry>>();
 
   const table = useReactTable({
     data: props.data,
@@ -59,6 +60,7 @@ export function PokemonTable(props: PokemonTableProps) {
       columnFilters,
       columnVisibility: {
         maxTier: false,
+        abilityName: false,
       },
     },
   });
@@ -91,7 +93,7 @@ export function PokemonTable(props: PokemonTableProps) {
           }
           className='max-w-sm'
         />
-        <PokemonMetaDialog
+        <PokemonInfoDialog
           pokemon={viewedPokemon}
           setPokemon={setViewedPokemon}
         />
@@ -190,7 +192,7 @@ export function PokemonTable(props: PokemonTableProps) {
                           virtualRow.start - index * virtualRow.size
                         }px)`,
                       }}
-                      onClick={() => setViewedPokemon(row.getValue('name'))}
+                      onClick={() => setViewedPokemon(row)}
                     >
                       {row.getVisibleCells().map(cell => {
                         return (

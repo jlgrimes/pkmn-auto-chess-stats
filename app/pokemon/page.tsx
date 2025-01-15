@@ -60,6 +60,7 @@ export default async function Pokemon() {
         index: index.replace('-', '/'),
         name: capitalizeString(name),
         abilityPower: getAbilityPower(translationData, ability, parseInt(tier)),
+        abilityName: ability,
         tier: parseInt(tier),
         types,
         hp: parseInt(hp),

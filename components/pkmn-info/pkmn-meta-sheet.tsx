@@ -33,7 +33,7 @@ export const PokemonMetaSheet = (props: PokemonMetaSheetProps) => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {data?.reverse()?.map(tier => (
+        {data?.map(tier => (
           <TableRow key={`${props.pokemon}-tier-row-${tier}`}>
             <TableCell>
               <Image
