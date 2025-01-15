@@ -12,7 +12,7 @@ export const WeatherDescriptions = () => {
   const weathers = Object.keys(data['weather']);
 
   return (
-    <div className='grid grid-cols-3 gap-4'>
+    <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4'>
       {weathers.map(weather => (
         <Card key={weather + '-card'}>
           <CardHeader className='flex flex-row justify-between items-center'>
