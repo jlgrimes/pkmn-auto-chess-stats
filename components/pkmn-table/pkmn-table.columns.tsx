@@ -5,7 +5,7 @@ import { ColumnDef } from '@tanstack/react-table';
 import { PokemonTableEntry } from './pkmn-table.types';
 import Image from 'next/image';
 import { SortHeaderButton } from './sort-header-button';
-import { PokemonSynergy } from './pkmn-synergy';
+import { PokemonSynergy } from '../pkmn-synergy';
 
 export const columns: ColumnDef<PokemonTableEntry>[] = [
   {

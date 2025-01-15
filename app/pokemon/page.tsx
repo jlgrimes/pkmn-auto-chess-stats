@@ -1,7 +1,7 @@
 import { PageHeader } from '@/components/page-header';
-import { PokemonTable } from '@/components/pkmn-table';
-import { columns } from '@/components/pkmn-table.columns';
-import { PokemonTableEntry } from '@/components/pkmn-table.types';
+import { PokemonTable } from '@/components/pkmn-table/pkmn-table';
+import { columns } from '@/components/pkmn-table/pkmn-table.columns';
+import { PokemonTableEntry } from '@/components/pkmn-table/pkmn-table.types';
 import { capitalizeString } from '@/lib/utils';
 
 // @typescrip

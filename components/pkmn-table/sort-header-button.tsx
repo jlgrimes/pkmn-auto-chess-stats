@@ -1,6 +1,6 @@
 import { ArrowDown, ArrowUp, ChevronsUpDown } from 'lucide-react';
 import { PokemonTableEntry } from './pkmn-table.types';
-import { Button } from './ui/button';
+import { Button } from '../ui/button';
 import { Column } from '@tanstack/react-table';
 
 interface SortHeaderButtonProps {

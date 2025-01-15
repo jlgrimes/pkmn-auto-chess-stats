@@ -21,7 +21,7 @@ import {
 } from '@tanstack/react-table';
 import { useCallback, useRef, useState } from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
-import { Input } from './ui/input';
+import { Input } from '../ui/input';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -31,9 +31,9 @@ import {
   DropdownMenuCheckboxItem,
 } from '@/components/ui/dropdown-menu';
 import { capitalizeString } from '@/lib/utils';
-import { PokemonSynergy } from './pkmn-synergy';
+import { PokemonSynergy } from '../pkmn-synergy';
 import { Settings2 } from 'lucide-react';
-import { PokemonMetaDialog } from './pkmn-meta/pkmn-meta-dialog';
+import { PokemonMetaDialog } from '../pkmn-meta/pkmn-meta-dialog';
 
 interface PokemonTableProps {
   data: PokemonTableEntry[];

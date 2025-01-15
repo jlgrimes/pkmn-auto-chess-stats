@@ -1,7 +1,14 @@
 'use client';
 
 import { useTranslations } from '@/lib/hooks/translations.hooks';
-import { Card, CardDescription, CardHeader, CardTitle } from '../ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '../ui/card';
+import { WeatherIcon } from './weather-icon';
 
 export const WeatherDescriptions = () => {
   const { data, isLoading } = useTranslations();
@@ -14,11 +21,16 @@ export const WeatherDescriptions = () => {
     <div className='grid grid-cols-3 gap-4'>
       {weathers.map(weather => (
         <Card>
-          <CardHeader>
-            <CardTitle>{data['weather'][weather]}</CardTitle>
-            <CardDescription>
-              {data['weather_description'][weather]}
-            </CardDescription>
+          <CardHeader className='flex flex-row justify-between items-center'>
+            <div className='space-y-1.5'>
+              <CardTitle className='flex justify-between items-center'>
+                <span>{data['weather'][weather]}</span>
+              </CardTitle>
+              <CardDescription>
+                {data['weather_description'][weather]}
+              </CardDescription>
+            </div>
+            <WeatherIcon weather={weather.toLowerCase()} />
           </CardHeader>
         </Card>
       ))}
