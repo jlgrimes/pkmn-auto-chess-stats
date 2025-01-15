@@ -41,11 +41,21 @@ export const PokemonInfoDialog = (props: PokemonInfoDialogProps) => {
               <TabsTrigger value='usage'>Usage</TabsTrigger>
             </TabsList>
             <TabsContent value='info'>
-              {
-                translations?.['ability'][
-                  props.pokemon.getValue('abilityName') as string
-                ]
-              }
+              <div>
+                Ability -{' '}
+                {
+                  translations?.['ability'][
+                    props.pokemon.getValue('abilityName') as string
+                  ]
+                }
+              </div>
+              <div>
+                {
+                  translations?.['ability_description'][
+                    props.pokemon.getValue('abilityName') as string
+                  ]
+                }
+              </div>
             </TabsContent>
             <TabsContent value='usage'>
               <PokemonMetaSheet
