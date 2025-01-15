@@ -83,6 +83,12 @@ export const columns: ColumnDef<PokemonTableEntry>[] = [
     ),
   },
   {
+    accessorKey: 'abilityPower',
+    header: ({ column }) => (
+      <SortHeaderButton column={column} header='Ability Power' />
+    ),
+  },
+  {
     accessorKey: 'defense',
     size: 20,
     header: ({ column }) => <SortHeaderButton column={column} header='Def' />,

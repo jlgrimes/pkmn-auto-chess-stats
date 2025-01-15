@@ -1,6 +1,7 @@
 export type PokemonTableEntry = {
   index: string;
   name: string;
+  abilityPower: number;
   tier: number;
   types: string[];
   hp: number;

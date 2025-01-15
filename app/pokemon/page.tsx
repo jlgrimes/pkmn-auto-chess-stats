@@ -1,11 +1,15 @@
 import { PageHeader } from '@/components/page-header';
+import { getAbilityPower } from '@/components/pkmn-table/ability.utils';
 import { PokemonTable } from '@/components/pkmn-table/pkmn-table';
 import { columns } from '@/components/pkmn-table/pkmn-table.columns';
 import { PokemonTableEntry } from '@/components/pkmn-table/pkmn-table.types';
+import { fetchTranslations } from '@/lib/hooks/translations.hooks';
 import { capitalizeString } from '@/lib/utils';
 
 // @typescrip
 export default async function Pokemon() {
+  const translationData = await fetchTranslations();
+
   const res = await fetch(
     'https://raw.githubusercontent.com/keldaanCommunity/pokemonAutoChess/refs/heads/master/app/models/precomputed/pokemons-data.csv'
   );
@@ -33,7 +37,7 @@ export default async function Pokemon() {
         specialDefense,
         _attackRange,
         _maxPP,
-        _ability,
+        ability,
         _family,
         _familyType1,
         _familyType2,
@@ -55,6 +59,7 @@ export default async function Pokemon() {
       return {
         index: index.replace('-', '/'),
         name: capitalizeString(name),
+        abilityPower: getAbilityPower(translationData, ability, parseInt(tier)),
         tier: parseInt(tier),
         types,
         hp: parseInt(hp),
