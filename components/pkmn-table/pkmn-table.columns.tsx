@@ -6,6 +6,7 @@ import { PokemonTableEntry } from './pkmn-table.types';
 import Image from 'next/image';
 import { SortHeaderButton } from './sort-header-button';
 import { PokemonSynergy } from '../pkmn-synergy';
+import { AbilityCell } from './ability-cell';
 
 export const columns: ColumnDef<PokemonTableEntry>[] = [
   {
@@ -54,6 +55,7 @@ export const columns: ColumnDef<PokemonTableEntry>[] = [
     },
   },
   { accessorKey: 'abilityName' },
+  { accessorKey: 'abilityDescription' },
   {
     accessorKey: 'types',
     header: 'Types',
@@ -85,7 +87,13 @@ export const columns: ColumnDef<PokemonTableEntry>[] = [
   {
     accessorKey: 'abilityPower',
     header: ({ column }) => (
-      <SortHeaderButton column={column} header='Ability Power' />
+      <SortHeaderButton column={column} header='Ability' />
+    ),
+    cell: ({ row }) => (
+      <AbilityCell
+        abilityPower={row.getValue('abilityPower')}
+        description={row.getValue('abilityDescription')}
+      />
     ),
   },
   {

@@ -61,6 +61,7 @@ export default async function Pokemon() {
         name: capitalizeString(name),
         abilityPower: getAbilityPower(translationData, ability, parseInt(tier)),
         abilityName: ability,
+        abilityDescription: translationData['ability_description'][ability],
         tier: parseInt(tier),
         types,
         hp: parseInt(hp),

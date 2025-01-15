@@ -61,6 +61,7 @@ export function PokemonTable(props: PokemonTableProps) {
       columnVisibility: {
         maxTier: false,
         abilityName: false,
+        abilityDescription: false,
       },
     },
   });

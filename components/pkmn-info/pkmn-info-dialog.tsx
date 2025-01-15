@@ -49,13 +49,7 @@ export const PokemonInfoDialog = (props: PokemonInfoDialogProps) => {
                   ]
                 }
               </div>
-              <div>
-                {
-                  translations?.['ability_description'][
-                    props.pokemon.getValue('abilityName') as string
-                  ]
-                }
-              </div>
+              <div>{props.pokemon.getValue('abilityDescription')}</div>
             </TabsContent>
             <TabsContent value='usage'>
               <PokemonMetaSheet
