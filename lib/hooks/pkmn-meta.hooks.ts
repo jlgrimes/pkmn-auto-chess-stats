@@ -22,7 +22,6 @@ export const usePokemonMeta = (pokemonName: string) => {
       res.json()
     )
   );
-  console.log(data);
 
   return {
     data: (data as ResponseSchema | undefined)?.map(tierObj => ({
