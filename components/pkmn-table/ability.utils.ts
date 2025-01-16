@@ -19,8 +19,9 @@ function computeAbilityPower(description: string, tier: number) {
     apArr = apArr.replace(', SP', '');
 
     try {
-      const parsedApArr = JSON.parse(`[${apArr}]`);
-      const APAsInt = parseInt(parsedApArr[tier - 1]);
+      const parsedApArr = JSON.parse(`[${apArr}]`) as string[];
+      const idx = parsedApArr.length > 1 ? tier - 1 : 0;
+      const APAsInt = parseInt(parsedApArr[idx]);
 
       if (isNaN(APAsInt)) return 0;
       return APAsInt;
