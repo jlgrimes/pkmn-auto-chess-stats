@@ -60,6 +60,7 @@ export const AbilityCell = (props: AbilityCellProps) => {
       )}
       {(props.description.includes(`Increase the user's ATK`) ||
         props.description.includes(`Increase the ATK`) ||
+        props.description.includes(`Increase the base ATK`) ||
         props.description.includes(`Increase ATK `) ||
         props.description.includes(`increase their ATK `) ||
         props.description.includes('and ATK by')) && (
@@ -82,19 +83,25 @@ export const AbilityCell = (props: AbilityCellProps) => {
           <ChevronsUpIcon className='h-4 w-4' />
         </div>
       )}
+      {/(Increase the AP)/i.test(props.description) && (
+        <div className='flex flex-row'>
+          <AbilityPower />
+          <ChevronsUpIcon className='h-4 w-4' />
+        </div>
+      )}
       {/((Restore) (\[[\dA-Za-z,=\.]+\]) PP)/i.test(props.description) && (
         <div className='flex flex-row'>
           <PP />
           <ChevronsUpIcon className='h-4 w-4' />
         </div>
       )}
-      {props.description.includes('POISONNED') && <Poison />}
+      {/* {props.description.includes('POISONNED') && <Poison />}
       {props.description.includes('CURSE') && <Curse />}
       {props.description.includes('FLINCH') && <Flinch />}
       {props.description.includes('CHARM') && <Charm />}
       {props.description.includes('SLEEP') && <Sleep />}
       {props.description.includes('PROTECT') && <Protect />}
-      {props.description.includes('PROTECT') && <RuneProtect />}
+      {props.description.includes('PROTECT') && <RuneProtect />} */}
     </div>
   );
 };
