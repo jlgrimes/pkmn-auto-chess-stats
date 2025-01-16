@@ -58,6 +58,7 @@ export const columns: ColumnDef<PokemonTableEntry>[] = [
       );
     },
   },
+  { accessorKey: 'maxTier' },
   { accessorKey: 'abilityName' },
   { accessorKey: 'abilityDescription' },
   {
