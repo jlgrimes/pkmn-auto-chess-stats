@@ -11,7 +11,9 @@ import { AbilityCell } from './ability-cell';
 export const columns: ColumnDef<PokemonTableEntry>[] = [
   {
     accessorKey: 'index',
-    header: ({ column }) => <SortHeaderButton column={column} header='Dex' />,
+    header: ({ column }) => (
+      <SortHeaderButton column={column} header='Dex' explicitType='number' />
+    ),
     size: 40,
     cell: ({ row }) => (
       <Image
@@ -26,7 +28,9 @@ export const columns: ColumnDef<PokemonTableEntry>[] = [
   },
   {
     accessorKey: 'name',
-    header: ({ column }) => <SortHeaderButton column={column} header='Name' />,
+    header: ({ column }) => (
+      <SortHeaderButton column={column} header='Name' explicitType='string' />
+    ),
     cell: ({ row }) => (
       <div className='min-w-[200px]'>{row.getValue('name')}</div>
     ),
@@ -85,18 +89,6 @@ export const columns: ColumnDef<PokemonTableEntry>[] = [
     ),
   },
   {
-    accessorKey: 'abilityPower',
-    header: ({ column }) => (
-      <SortHeaderButton column={column} header='Ability' />
-    ),
-    cell: ({ row }) => (
-      <AbilityCell
-        abilityPower={row.getValue('abilityPower')}
-        description={row.getValue('abilityDescription')}
-      />
-    ),
-  },
-  {
     accessorKey: 'defense',
     size: 20,
     header: ({ column }) => <SortHeaderButton column={column} header='Def' />,
@@ -106,6 +98,22 @@ export const columns: ColumnDef<PokemonTableEntry>[] = [
     size: 20,
     header: ({ column }) => (
       <SortHeaderButton column={column} header='Sp. Def' />
+    ),
+  },
+  {
+    accessorKey: 'abilityPower',
+    header: ({ column }) => (
+      <SortHeaderButton
+        column={column}
+        header='Ability'
+        explicitType='number'
+      />
+    ),
+    cell: ({ row }) => (
+      <AbilityCell
+        abilityPower={row.getValue('abilityPower')}
+        description={row.getValue('abilityDescription')}
+      />
     ),
   },
 ];
