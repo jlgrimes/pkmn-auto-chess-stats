@@ -77,11 +77,14 @@ export function PokemonTable(props: PokemonTableProps) {
     overscan: 20,
   });
 
-  const getSynergyIsChecked = useCallback((synergy: string) => {
-    return (
-      table.getColumn('types')?.getFilterValue() as string[] | undefined
-    )?.includes(synergy);
-  }, []);
+  const getSynergyIsChecked = useCallback(
+    (synergy: string) => {
+      return (
+        table.getColumn('types')?.getFilterValue() as string[] | undefined
+      )?.includes(synergy);
+    },
+    [table]
+  );
 
   return (
     <div className='w-full'>
