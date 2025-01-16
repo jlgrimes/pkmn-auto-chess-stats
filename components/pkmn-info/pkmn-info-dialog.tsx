@@ -10,6 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useTranslations } from '@/lib/hooks/translations.hooks';
 import { PokemonTableEntry } from '../pkmn-table/pkmn-table.types';
 import { Row } from '@tanstack/react-table';
+import { Alert, AlertDescription } from '../ui/alert';
 
 interface PokemonInfoDialogProps {
   pokemon: Row<PokemonTableEntry> | undefined;
@@ -20,6 +21,13 @@ export const PokemonInfoDialog = (props: PokemonInfoDialogProps) => {
   const { data: translations } = useTranslations();
   // to get it to "preload" the SWR hook
   usePokemonMeta('');
+
+  const pokemonName = props.pokemon?.getValue('name') as string;
+  const passiveData = props.pokemon?.getValue('name')
+    ? translations?.['passive_description']?.[
+        pokemonName.toUpperCase()
+      ]?.replaceAll(`$t(pkm.${pokemonName.toUpperCase()})`, pokemonName)
+    : null;
 
   return (
     <Dialog
@@ -41,15 +49,24 @@ export const PokemonInfoDialog = (props: PokemonInfoDialogProps) => {
               <TabsTrigger value='usage'>Usage</TabsTrigger>
             </TabsList>
             <TabsContent value='info'>
-              <div>
-                Ability -{' '}
-                {
-                  translations?.['ability'][
-                    props.pokemon.getValue('abilityName') as string
-                  ]
-                }
+              <div className='space-y-2'>
+                {passiveData && (
+                  <Alert>
+                    <AlertDescription>{passiveData}</AlertDescription>
+                  </Alert>
+                )}
+                <div>
+                  <div>
+                    Ability -{' '}
+                    {
+                      translations?.['ability'][
+                        props.pokemon.getValue('abilityName') as string
+                      ]
+                    }
+                  </div>
+                  <div>{props.pokemon.getValue('abilityDescription')}</div>
+                </div>
               </div>
-              <div>{props.pokemon.getValue('abilityDescription')}</div>
             </TabsContent>
             <TabsContent value='usage'>
               <PokemonMetaSheet

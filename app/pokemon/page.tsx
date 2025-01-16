@@ -47,7 +47,6 @@ export default async function Pokemon() {
         _regional,
         numStages,
       ] = line.split(',');
-      console.log(line);
 
       const types = [type1, type2, type3, type4].filter(
         type => type && type.length > 0

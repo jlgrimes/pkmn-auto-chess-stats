@@ -2,18 +2,11 @@ import { ChevronsUpIcon } from 'lucide-react';
 import { AbilityPower } from '../icons/ability-power';
 import { AttackSpeed } from '../icons/attack-speed';
 import { Shield } from '../icons/shield';
-import { Poison } from '../icons/poison';
 import { Attack } from '../icons/attack';
-import { Protect } from '../icons/protect';
 import { HP } from '../icons/hp';
 import { Defense } from '../icons/defense';
-import { Curse } from '../icons/curse';
 import { CritChance } from '../icons/crit-chance';
-import { Flinch } from '../icons/flinch';
-import { Charm } from '../icons/charm';
-import { Sleep } from '../icons/sleep';
 import { PP } from '../icons/pp';
-import { RuneProtect } from '../icons/rune-protect';
 
 interface AbilityCellProps {
   abilityPower: number;
