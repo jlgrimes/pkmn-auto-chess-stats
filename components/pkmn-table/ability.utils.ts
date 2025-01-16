@@ -41,7 +41,6 @@ export const getAbilityPower = (
   name: string,
   tier: number
 ) => {
-  const abilityNameText = translations['ability'][name];
   const abilityDescription = translations['ability_description'][name];
   const abilityPower = computeAbilityPower(abilityDescription, tier);
 
